@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <body>
+    <input id="custom-input" />
+    <button>Write to SalesForce</button>
+    <button>Read from SalesForce</button>
+    <script>
+      const write = function() {
+        const customString = document.getElementById('custom-input').value
+        window.parent.postMessage({ type: 'SET_CUSTOM_STRING', customString }, '*')
+      }
+
+      const read = function() {
+        window.parent.postMessage({ type: 'READ_CUSTOM_STRING' })
+      }
+
+      window.addEventListener('message', function(event) {
+        console.log(event.data)
+        if(event.data.type === 'CUSTOM_STRING_FROM_SALESFORCE') {
+          document.getElementById('custom-input').value = event.data.customString
+        }
+      })
+    </script>
+  </body>
+</html>
