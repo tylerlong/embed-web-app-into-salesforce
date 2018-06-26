@@ -7,7 +7,7 @@
     <script>
       const write = function() {
         const customString = document.getElementById('custom-input').value
-        window.parent.postMessage({ type: 'SET_CUSTOM_STRING', customString }, '*')
+        window.parent.postMessage({ type: 'WRITE_CUSTOM_STRING', customString }, '*')
       }
 
       const read = function() {
