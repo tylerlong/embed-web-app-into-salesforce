@@ -11,17 +11,17 @@
   <body>
     <h1>My Web App</h1>
     <input id="custom-input" /><br/><br/>
-    <button onclick="write()">Write to SalesForce</button><br/><br/>
-    <button onclick="read()">Read from SalesForce</button>
+    <button onclick="writeToSF()">Write to SalesForce</button><br/><br/>
+    <button onclick="readFromSF()">Read from SalesForce</button>
     <script>
-      const write = function() {
+      const writeToSF = function() {
         const customString = document.getElementById('custom-input').value
         const data = { type: 'WRITE_CUSTOM_STRING', customString }
         console.log('Posting message', data)
         window.parent.postMessage(data, '*')
       }
 
-      const read = function() {
+      const readFromSF = function() {
         const data = { type: 'READ_CUSTOM_STRING' }
         console.log('Posting message', data)
         window.parent.postMessage(data, '*')
