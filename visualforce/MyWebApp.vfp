@@ -1,0 +1,41 @@
+<apex:page standardController="Opportunity" showQuickActionVfHeader="false">
+  <style>
+    body, .cuf-content {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    iframe {
+      display: block;
+      border: none;
+      height: 100vh;
+      width: 100vw;
+    }
+  </style>
+  <script src="/soap/ajax/42.0/connection.js"></script>
+  <script>
+    function receiveMessage(event) {
+      switch(event.data.type) {
+        case 'WRITE_CUSTOM_STRING':
+          sforce.connection.sessionId = '{!$Api.Session_ID}'
+          const qr = sforce.connection.query("select id, Custom_String__c from Opportunity where id = '{!opportunity.Id}' limit 1")
+          const opportunities = qr.getArray("records")
+          const opportunity = opportunities[0]
+          opportunity.Custom_String__c = event.data.customString
+          sforce.connection.update([opportunity])
+          break
+        case 'READ_CUSTOM_STRING':
+          sforce.connection.sessionId = '{!$Api.Session_ID}'
+          const qr = sforce.connection.query("select id, Custom_String__c from Opportunity where id = '{!opportunity.Id}' limit 1")
+          const opportunities = qr.getArray("records")
+          const opportunity = opportunities[0]
+          document.getElementById('my-web-app-iframe-2').contentWindow
+            .postMessage({ type: 'CUSTOM_STRING_FROM_SALESFORCE', customString: opportunity.Custom_String__c }, '*')
+          break
+        default:
+          break
+      }
+    }
+    window.addEventListener("message", receiveMessage);
+  </script>
+  <apex:iframe id="my-web-app-iframe-2" src="https://tylerlong.github.io/embed-web-app-into-salesforce/" width="100%" frameborder="false"/>
+</apex:page>
