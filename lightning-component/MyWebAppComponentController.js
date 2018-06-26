@@ -25,7 +25,7 @@
               .postMessage({ type: 'CUSTOM_STRING_FROM_SALESFORCE', customString }, '*')
           });
           $A.enqueueAction(getAction);
-          console.log('Reading custom string', event.data.customString)
+          console.log('Reading custom string')
           break
         default:
           break
