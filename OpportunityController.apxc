@@ -1,0 +1,15 @@
+public class OpportunityController {
+    @AuraEnabled
+    public static String getOpportunityCustomString(Id opportunityId) {
+        Opportunity opportunity = [SELECT Custom_String__c FROM Opportunity WHERE Id=:opportunityId];
+        return opportunity.Custom_String__c;
+    }
+    
+    @AuraEnabled
+    public static String setOpportunityCustomString(Id opportunityId, String customString) {
+        Opportunity opportunity = [SELECT Custom_String__c FROM Opportunity WHERE Id=:opportunityId];
+        opportunity.Custom_String__c = customString;
+        update opportunity;
+        return opportunity.Custom_String__c;
+    }
+}
