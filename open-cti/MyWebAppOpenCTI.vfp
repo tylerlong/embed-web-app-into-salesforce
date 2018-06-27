@@ -5,27 +5,40 @@
     }
   </style>
   <apex:iframe id="my-web-app-iframe-3" src="https://tylerlong.github.io/embed-web-app-into-salesforce/" height="240" width="240" frameborder="false"/>
-  <script src="/support/api/40.0/lightning/opencti_min.js"></script>
+  <script src="/support/api/43.0/lightning/opencti_min.js"></script>
   <script>
     function receiveMessage(event) {
       switch(event.data.type) {
         case 'WRITE_CUSTOM_STRING':
-          sforce.opencti.runApex({
-            apexClass: 'OpportunityController',
-            methodName: 'setOpportunityCustomString',
-            methodParams: 'opportunityId=' + $CurrentPage.parameters.id + '&customString=' + event.data.customString
+          sforce.opencti.getAppViewInfo({ 
+            callback: function(r) {
+              const opportunityId = r.returnValue.recordId
+              sforce.opencti.runApex({
+                apexClass: 'OpportunityController',
+                methodName: 'setOpportunityCustomString',
+                methodParams: 'opportunityId=' + opportunityId + '&customString=' + event.data.customString,
+                callback: function(r) {
+                  console.log(r)
+                }
+              })
+            }
           })
+          break
         case 'READ_CUSTOM_STRING':
-          sforce.opencti.runApex({
-            apexClass: 'OpportunityController',
-            methodName: 'getOpportunityCustomString',
-            methodParams: 'opportunityId=' + $CurrentPage.parameters.id,
-            function(r) {
-              if(r.success === true) {
-                const customString = r.returnValue.runApex
-                document.getElementById('my-web-app-iframe-3').contentWindow
-                  .postMessage({ type: 'CUSTOM_STRING_FROM_SALESFORCE', customString }, '*')
-              }
+          sforce.opencti.getAppViewInfo({ 
+            callback: function(r) {
+              const opportunityId = r.returnValue.recordId
+              sforce.opencti.runApex({
+                apexClass: 'OpportunityController',
+                methodName: 'getOpportunityCustomString',
+                methodParams: 'opportunityId=' + opportunityId,
+                callback: function(r) {
+                  console.log(r)
+                  const customString = r.returnValue.runApex
+                  document.getElementById('my-web-app-iframe-3').contentWindow
+                    .postMessage({ type: 'CUSTOM_STRING_FROM_SALESFORCE', customString }, '*')
+                }
+              })
             }
           })
           break
