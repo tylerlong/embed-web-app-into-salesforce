@@ -3,8 +3,14 @@
     .hasMotif {
       margin : 0px;
     }
+    iframe {
+      display: block;
+      border: none;
+      height: 100vh;
+      width: 100vw;
+    }
   </style>
-  <apex:iframe id="my-web-app-iframe-3" src="https://tylerlong.github.io/embed-web-app-into-salesforce/" height="240" width="240" frameborder="false"/>
+  <apex:iframe id="my-web-app-iframe-3" src="https://tylerlong.github.io/embed-web-app-into-salesforce/" frameborder="false"/>
   <script src="/support/api/43.0/lightning/opencti_min.js"></script>
   <script>
     function receiveMessage(event) {

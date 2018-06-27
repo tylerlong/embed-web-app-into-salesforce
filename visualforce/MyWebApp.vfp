@@ -11,7 +11,7 @@
       width: 100vw;
     }
   </style>
-  <apex:iframe id="my-web-app-iframe-2" src="https://tylerlong.github.io/embed-web-app-into-salesforce/" width="100%" frameborder="false"/>
+  <apex:iframe id="my-web-app-iframe-2" src="https://tylerlong.github.io/embed-web-app-into-salesforce/" frameborder="false"/>
   <script src="/soap/ajax/42.0/connection.js"></script>
   <script>
     function receiveMessage(event) {
