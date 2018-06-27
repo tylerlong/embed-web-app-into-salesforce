@@ -16,20 +16,18 @@
     function receiveMessage(event) {
       switch(event.data.type) {
         case 'WRITE_CUSTOM_STRING':
-          sforce.connection.sessionId = '{!$Api.Session_ID}'
-          const qr = sforce.connection.query("select id, Custom_String__c from Opportunity where id = '{!opportunity.Id}' limit 1")
-          const opportunities = qr.getArray("records")
-          const opportunity = opportunities[0]
-          opportunity.Custom_String__c = event.data.customString
-          sforce.connection.update([opportunity])
-          break
         case 'READ_CUSTOM_STRING':
           sforce.connection.sessionId = '{!$Api.Session_ID}'
           const qr = sforce.connection.query("select id, Custom_String__c from Opportunity where id = '{!opportunity.Id}' limit 1")
           const opportunities = qr.getArray("records")
           const opportunity = opportunities[0]
-          document.getElementById('my-web-app-iframe-2').contentWindow
-            .postMessage({ type: 'CUSTOM_STRING_FROM_SALESFORCE', customString: opportunity.Custom_String__c }, '*')
+          if(event.data.type === 'WRITE_CUSTOM_STRING') {
+            opportunity.Custom_String__c = event.data.customString
+            sforce.connection.update([opportunity])
+          } else {
+            document.getElementById('my-web-app-iframe-2').contentWindow
+              .postMessage({ type: 'CUSTOM_STRING_FROM_SALESFORCE', customString: opportunity.Custom_String__c }, '*')
+          }
           break
         default:
           break
