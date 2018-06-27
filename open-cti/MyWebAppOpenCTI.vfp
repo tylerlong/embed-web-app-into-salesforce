@@ -1,0 +1,12 @@
+<apex:page>
+  <style>
+    .hasMotif {
+      margin : 0px;
+    }
+  </style>
+  <apex:iframe id="my-web-app-iframe-3" src="https://tylerlong.github.io/embed-web-app-into-salesforce/" height="240" width="240" frameborder="false"/>
+  <script src="/support/api/40.0/lightning/opencti_min.js"></script>
+  <script>
+    
+  </script>
+</apex:page>

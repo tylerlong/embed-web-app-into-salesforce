@@ -2,6 +2,6 @@
 
 There are three approaches:
 
-- [Lightning component](lightning-component)
-- VisualForce
-- OpenCTI
+- [Lightning Component](lightning-component)
+- [VisualForce](visualforce)
+- [Open CTI](open-cti)
